@@ -15,3 +15,24 @@
 # queue mechanisms, basic principles of OOP and practice of soling real issues.
 
 from classes.dispatching import Dispatching
+
+print("Данное ПО предназначено для получения список процессов в данный момент.")
+print("""1. Получение списка процессов(pid, name, priority, status)
+2. Получение списка имен процессов запущенных на ПК.
+3. Сортировка списка имен процессов по алфавиту.
+""")
+
+action = int(input("Введите номер требуемой операции: "))
+dispatching_obj = Dispatching()
+
+match action:
+    case 1:
+        dispatching_obj.get_all()
+    case 2:
+        for proc in dispatching_obj.get_names():
+            print(proc)
+    case 3:
+        for proc in dispatching_obj.get_sorted_by_name():
+            print(proc)
+    case _:
+        print("Надо выбрать что-то из списка.")
