@@ -20,6 +20,7 @@ print("Данное ПО предназначено для получения с
 print("""1. Получение списка процессов(pid, name, priority, status)
 2. Получение списка имен процессов запущенных на ПК.
 3. Сортировка списка имен процессов по алфавиту.
+4. Сортировка процессов по приоритету.
 """)
 
 action = int(input("Введите номер требуемой операции: "))
@@ -34,5 +35,7 @@ match action:
     case 3:
         for proc in dispatching_obj.get_sorted_by_name():
             print(proc)
+    case 4:
+        dispatching_obj.get_sorted_priority()
     case _:
         print("Надо выбрать что-то из списка.")
