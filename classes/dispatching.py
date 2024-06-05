@@ -7,6 +7,24 @@ from classes.process import ownProcess
 class Dispatching:
     def __init__(self):
         pass
+
+    def qSort(self, arr) -> list:
+        """Быстрая сортировка массива"""
+        if len(arr) <= 1:
+            return arr
+        else:
+            mid = arr[len(arr)//2]
+            s_nums = []
+            m_nums = []
+            e_nums = []
+            for n in arr:
+                if n < mid:
+                    s_nums.append(n)
+                elif n > mid:
+                    m_nums.append(n)
+                else:
+                    e_nums.append(n)
+            return self.qSort(s_nums) + e_nums + self.qSort(m_nums)
     
     def get_all(self):
         """Получение словаря key=pid, value=всё остальное"""
@@ -50,30 +68,20 @@ class Dispatching:
         return sorted_list
     
     def get_sorted_priority(self):
-        # получаем список приоритетов
+        """Сортировка по приоритету"""
         priorities = []
-        description = []
         priority_dict = self.get_all()
         for key, value in priority_dict.items():
             priorities.append(value[1])
 
-        def qSort(arr) -> list:
-            """Быстрая сортировка массива"""
-            if len(arr) <= 1:
-                return arr
-            else:
-                mid = arr[len(arr)//2]
-                s_nums = []
-                m_nums = []
-                e_nums = []
-                for n in arr:
-                    if n < mid:
-                        s_nums.append(n)
-                    elif n > mid:
-                        m_nums.append(n)
-                    else:
-                        e_nums.append(n)
-                return qSort(s_nums) + e_nums + qSort(m_nums)
+        return self.qSort(priorities)
+    
+    def get_sorted_execTime(self):
+        """Сортировка по времени исполнения"""
+        exec_time = []
+        time_dict = self.get_all()
+        for key, value in time_dict.items():
+            exec_time.append(value[3])
 
-        return qSort(priorities)
+        return self.qSort(exec_time)
         

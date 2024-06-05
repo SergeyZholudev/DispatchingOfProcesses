@@ -21,6 +21,7 @@ print("""1. Получение списка процессов(pid, name, priori
 2. Получение списка имен процессов запущенных на ПК.
 3. Сортировка списка имен процессов по алфавиту.
 4. Сортировка процессов по приоритету.
+5. Сортировка процессов по времени исполнения.
 """)
 
 action = int(input("Введите номер требуемой операции: "))
@@ -39,6 +40,9 @@ match action:
             print(proc)
     case 4:
         for i in dispatching_obj.get_sorted_priority():
+            print(f"Priority: {i}")
+    case 5:
+        for i in dispatching_obj.get_sorted_execTime():
             print(f"Priority: {i}")
     case _:
         print("Надо выбрать что-то из списка.")
