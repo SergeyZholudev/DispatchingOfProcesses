@@ -67,7 +67,7 @@ class Dispatching:
         sorted_list = sorted(processes_names)
         return sorted_list
     
-    def get_sorted_priority(self):
+    def get_sorted_priority(self) -> list:
         """Сортировка по приоритету"""
         priorities = []
         priority_dict = self.get_all()
@@ -76,7 +76,7 @@ class Dispatching:
 
         return self.qSort(priorities)
     
-    def get_sorted_execTime(self):
+    def get_sorted_execTime(self) -> list:
         """Сортировка по времени исполнения"""
         exec_time = []
         time_dict = self.get_all()
@@ -84,4 +84,6 @@ class Dispatching:
             exec_time.append(value[3])
 
         return self.qSort(exec_time)
+    
+    
         
