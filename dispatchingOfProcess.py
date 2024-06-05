@@ -28,7 +28,9 @@ dispatching_obj = Dispatching()
 
 match action:
     case 1:
-        dispatching_obj.get_all()
+        for key, value in dispatching_obj.get_all().items():
+            print(key)
+            print(value)
     case 2:
         for proc in dispatching_obj.get_names():
             print(proc)
@@ -36,6 +38,7 @@ match action:
         for proc in dispatching_obj.get_sorted_by_name():
             print(proc)
     case 4:
-        dispatching_obj.get_sorted_priority()
+        for i in dispatching_obj.get_sorted_priority():
+            print(f"Priority: {i}")
     case _:
         print("Надо выбрать что-то из списка.")

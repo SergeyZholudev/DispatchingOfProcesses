@@ -22,21 +22,19 @@ class Dispatching:
         # формируем объекты, наполняем словарь процессов, так как priority
         # и execution time получить не можем, то генерим их самостоятельно
         processes = {}
-        for proc in  psutil.process_iter(['pid', 'name', 'status']):
+        for proc in psutil.process_iter(['pid', 'name', 'status']):
             process_obj = ownProcess(proc.info['pid'], \
                                     proc.info['name'], \
                                     priority_gen(), \
                                     proc.info['status'], \
                                     exec_time_gen()
             )
-            processes[process_obj.pid] = (process_obj.name, \
+            processes[process_obj.pid] = [process_obj.name, \
                                             process_obj.priority, \
                                             process_obj.status, \
-                                            process_obj.exec_time)
-        # выводим на экран словарь
-        for key,value in processes.items():
-            print(key)
-            print(value)
+                                            process_obj.exec_time]
+        
+        return processes
 
     def get_names(self) -> list:
         """Несортированный список имен процессов"""
@@ -52,5 +50,30 @@ class Dispatching:
         return sorted_list
     
     def get_sorted_priority(self):
+        # получаем список приоритетов
         priorities = []
+        description = []
+        priority_dict = self.get_all()
+        for key, value in priority_dict.items():
+            priorities.append(value[1])
+
+        def qSort(arr) -> list:
+            """Быстрая сортировка массива"""
+            if len(arr) <= 1:
+                return arr
+            else:
+                mid = arr[len(arr)//2]
+                s_nums = []
+                m_nums = []
+                e_nums = []
+                for n in arr:
+                    if n < mid:
+                        s_nums.append(n)
+                    elif n > mid:
+                        m_nums.append(n)
+                    else:
+                        e_nums.append(n)
+                return qSort(s_nums) + e_nums + qSort(m_nums)
+
+        return qSort(priorities)
         
