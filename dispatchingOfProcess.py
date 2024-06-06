@@ -14,19 +14,23 @@
 # This project has test purpose and is needed for understanding of stack and 
 # queue mechanisms, basic principles of OOP and practice of soling real issues.
 
+import os
 from classes.dispatching import Dispatching
 
 print("Данное ПО предназначено для получения список процессов в данный момент.")
-print("""1. Получение списка процессов(pid, name, priority, status)
+
+while True:
+    print("""1. Получение списка процессов(pid, name, priority, status)
 2. Получение списка имен процессов запущенных на ПК.
 3. Сортировка списка имен процессов по алфавиту.
 4. Сортировка процессов по приоритету.
 5. Сортировка процессов по времени исполнения.
 6. Поиск процесса по PID.
+7. Поиск процесса по имени.
+9. Очистить экран.
 0. Выход из программы.
 """)
-
-while True:
+    
     action = int(input("Введите номер требуемой операции: "))
     dispatching_obj = Dispatching()
 
@@ -49,7 +53,11 @@ while True:
                 print(f"Exec time: {i}")
         case 6:
             dispatching_obj.searching_by_pid()
+        case 7:
+            dispatching_obj.searching_by_name()
+        case 9:
+            os.system('cls')
         case 0:
             break
         case _:
-            print("Надо выбрать что-то из списка.")
+            print("Надо что-то выбрать из меню.")

@@ -30,16 +30,15 @@ class Dispatching:
         """Функция двоичного поиска"""
         low = 0
         high = len(arr) - 1
-        while low < high:
+        while low <= high:
             mid = (low + high) // 2
+            if pid == arr[mid]:
+                return True
             if pid > arr[mid]:
                 low = mid + 1
             elif pid < arr[mid]:
                 high = mid - 1
-            else:
-                return True
-        
-    
+  
     def get_all(self):
         """Получение словаря key=pid, value=всё остальное"""
 
@@ -113,7 +112,19 @@ class Dispatching:
                 print("Введённая величина должна быть числом.")
         if self.binary_search(processes_pid, user_pid):
             processes_dict = self.get_all()
+            print("*" *40)
             print(processes_dict[user_pid])
+            print("*" *40)
         else:
             print("Процесса с таким PID нет.")
+
+    def searching_by_name(self) -> None:
+        processes_names = self.get_all()
+        user_proc_name = input("Введите имя процесса: ")
+        for key, value in processes_names.items():
+            if value[0].lower() == user_proc_name.lower():
+                print("*" *40)
+                print(f"PID: {key}")
+                print(f"INFO: {value}")
+                print("*" *40)
         
