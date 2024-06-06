@@ -26,10 +26,24 @@ class Dispatching:
                     e_nums.append(n)
             return self.qSort(s_nums) + e_nums + self.qSort(m_nums)
     
+    def binary_search(self, arr: list, pid) -> bool:
+        """Функция двоичного поиска"""
+        low = 0
+        high = len(arr) - 1
+        while low < high:
+            mid = (low + high) // 2
+            if pid > arr[mid]:
+                low = mid + 1
+            elif pid < arr[mid]:
+                high = mid - 1
+            else:
+                return True
+        
+    
     def get_all(self):
         """Получение словаря key=pid, value=всё остальное"""
 
-        def priority_gen() -> int:
+        def priority_gen() -> dict:
             """генерация приоритета"""
             return random.randint(0, 31)
         
@@ -85,5 +99,21 @@ class Dispatching:
 
         return self.qSort(exec_time)
     
-    
+    def searching_by_pid(self):
+        """Поиск процесса по PID"""
+        processes_pid = []
+        for proc in psutil.process_iter(['pid']):   # формируем список pid
+            processes_pid.append(proc.info['pid'])
+        print(processes_pid)
+        while True:
+            try:
+                user_pid = int(input("Введите PID процесса: "))
+                break
+            except:
+                print("Введённая величина должна быть числом.")
+        if self.binary_search(processes_pid, user_pid):
+            processes_dict = self.get_all()
+            print(processes_dict[user_pid])
+        else:
+            print("Процесса с таким PID нет.")
         

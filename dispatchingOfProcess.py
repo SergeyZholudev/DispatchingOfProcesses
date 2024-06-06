@@ -22,27 +22,34 @@ print("""1. Получение списка процессов(pid, name, priori
 3. Сортировка списка имен процессов по алфавиту.
 4. Сортировка процессов по приоритету.
 5. Сортировка процессов по времени исполнения.
+6. Поиск процесса по PID.
+0. Выход из программы.
 """)
 
-action = int(input("Введите номер требуемой операции: "))
-dispatching_obj = Dispatching()
+while True:
+    action = int(input("Введите номер требуемой операции: "))
+    dispatching_obj = Dispatching()
 
-match action:
-    case 1:
-        for key, value in dispatching_obj.get_all().items():
-            print(key)
-            print(value)
-    case 2:
-        for proc in dispatching_obj.get_names():
-            print(proc)
-    case 3:
-        for proc in dispatching_obj.get_sorted_by_name():
-            print(proc)
-    case 4:
-        for i in dispatching_obj.get_sorted_priority():
-            print(f"Priority: {i}")
-    case 5:
-        for i in dispatching_obj.get_sorted_execTime():
-            print(f"Priority: {i}")
-    case _:
-        print("Надо выбрать что-то из списка.")
+    match action:
+        case 1:
+            for key, value in dispatching_obj.get_all().items():
+                print(key)
+                print(value)
+        case 2:
+            for proc in dispatching_obj.get_names():
+                print(proc)
+        case 3:
+            for proc in dispatching_obj.get_sorted_by_name():
+                print(proc)
+        case 4:
+            for i in dispatching_obj.get_sorted_priority():
+                print(f"Priority: {i}")
+        case 5:
+            for i in dispatching_obj.get_sorted_execTime():
+                print(f"Exec time: {i}")
+        case 6:
+            dispatching_obj.searching_by_pid()
+        case 0:
+            break
+        case _:
+            print("Надо выбрать что-то из списка.")
