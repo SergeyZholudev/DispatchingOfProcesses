@@ -15,8 +15,37 @@
 # queue mechanisms, basic principles of OOP and practice of soling real issues.
 
 import os
-from classes.dispatching import Dispatching
+import queue
 
+from classes.dispatching import Dispatching
+from classes.process import ownProcess
+
+# создаём две приоритетные очереди 
+q_high = queue.Queue()
+q_low = queue.Queue()
+
+def queuing():
+    """Добавляем процесс в очереди, на основании значения
+    приоритета либо в high priority, либо в low priority очередь."""
+    for i in range(5):
+        temp_proc = ownProcess.add_proc()
+        if temp_proc.priority <= 15:
+            q_high.put(temp_proc)
+        else:
+            q_low.put(temp_proc)
+
+def queue_show():
+    """Показываем состав очередей."""
+    if not q_high.empty():
+        print(f"\nОчередь высокого приоритета: \n{q_high.get()}\n")
+    else:
+        print(f"\nОчередь высокого приоритета пуста.")
+    if not q_low.empty():
+        print(f"\nОчередь низкого приоритета: \n{q_low.get()}\n")
+    else:
+        print(f"\nОчередь низкого приоритета пуста. \n")
+
+# основной код программы, взаимодействие с пользователем и т.д.
 print("Данное ПО предназначено для получения список процессов в данный момент.")
 
 while True:
@@ -27,8 +56,11 @@ while True:
 5. Сортировка процессов по времени исполнения.
 6. Поиск процесса по PID.
 7. Поиск процесса по имени.
-9. Очистить экран.
-0. Выход из программы.
+8. Добавить процесс.
+9. Показать процесс из очереди с высоким приоритетом(LIFO - стэк).
+10. Показать процесс из очереди с низкиим приоритетом(FIFO). 
+99. Очистить экран.
+00. Выход из программы.
 """)
     
     action = int(input("Введите номер требуемой операции: "))
@@ -55,9 +87,13 @@ while True:
             dispatching_obj.searching_by_pid()
         case 7:
             dispatching_obj.searching_by_name()
+        case 8:
+            queuing()
         case 9:
+            queue_show()
+        case 99:
             os.system('cls')
-        case 0:
+        case 00:
             break
         case _:
             print("Надо что-то выбрать из меню.")

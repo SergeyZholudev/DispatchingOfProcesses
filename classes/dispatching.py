@@ -1,4 +1,4 @@
-# class for managing of the list of PID
+# класс для работы с реальными процессами ОС
 
 import random
 import psutil
@@ -103,7 +103,7 @@ class Dispatching:
         processes_pid = []
         for proc in psutil.process_iter(['pid']):   # формируем список pid
             processes_pid.append(proc.info['pid'])
-        print(processes_pid)
+        # print(processes_pid)
         while True:
             try:
                 user_pid = int(input("Введите PID процесса: "))
@@ -119,6 +119,7 @@ class Dispatching:
             print("Процесса с таким PID нет.")
 
     def searching_by_name(self) -> None:
+        """Поиск информации о процессе по имени."""
         processes_names = self.get_all()
         user_proc_name = input("Введите имя процесса: ")
         for key, value in processes_names.items():
@@ -127,4 +128,4 @@ class Dispatching:
                 print(f"PID: {key}")
                 print(f"INFO: {value}")
                 print("*" *40)
-        
+                
