@@ -21,29 +21,38 @@ from classes.dispatching import Dispatching
 from classes.process import ownProcess
 
 # создаём две приоритетные очереди 
-q_high = queue.Queue()
+q_high = queue.LifoQueue()
 q_low = queue.Queue()
 
 def queuing():
     """Добавляем процесс в очереди, на основании значения
     приоритета либо в high priority, либо в low priority очередь."""
-    for i in range(5):
+    while True:
         temp_proc = ownProcess.add_proc()
         if temp_proc.priority <= 15:
             q_high.put(temp_proc)
         else:
             q_low.put(temp_proc)
+        
+        one_more = input("Хотите добавить ещё один процесс(y/n)?: ")
+        if 'y' in one_more:
+            pass
+        else:
+            break
 
-def queue_show():
-    """Показываем состав очередей."""
-    if not q_high.empty():
-        print(f"\nОчередь высокого приоритета: \n{q_high.get()}\n")
-    else:
-        print(f"\nОчередь высокого приоритета пуста.")
+def get_low_priority_proc():
+    """Возвращаем процесс добавленный в очередь первым(FIFO)."""
     if not q_low.empty():
-        print(f"\nОчередь низкого приоритета: \n{q_low.get()}\n")
+        print(f"\nОчередь низкого приоритета(FIFO): \n{q_low.get()}\n")
     else:
         print(f"\nОчередь низкого приоритета пуста. \n")
+
+def get_high_priority_proc():
+    """Возвращаем процесс добавленный в очередь последним(LIFO)."""
+    if not q_high.empty():
+        print(f"\nОчередь высокого приоритета(LIFO): \n{q_high.get()}\n")
+    else:
+        print(f"\nОчередь выского приоритета пуста. \n")
 
 # основной код программы, взаимодействие с пользователем и т.д.
 print("Данное ПО предназначено для получения список процессов в данный момент.")
@@ -71,26 +80,34 @@ while True:
             for key, value in dispatching_obj.get_all().items():
                 print(key)
                 print(value)
+            print("\n"*2)
         case 2:
             for proc in dispatching_obj.get_names():
                 print(proc)
+            print("\n"*2)
         case 3:
             for proc in dispatching_obj.get_sorted_by_name():
                 print(proc)
+            print("\n"*2)
         case 4:
             for i in dispatching_obj.get_sorted_priority():
                 print(f"Priority: {i}")
+            print("\n"*2)
         case 5:
             for i in dispatching_obj.get_sorted_execTime():
                 print(f"Exec time: {i}")
+            print("\n"*2)
         case 6:
             dispatching_obj.searching_by_pid()
         case 7:
             dispatching_obj.searching_by_name()
+            print("\n"*2)
         case 8:
             queuing()
         case 9:
-            queue_show()
+            get_high_priority_proc()
+        case 10:
+            get_low_priority_proc()
         case 99:
             os.system('cls')
         case 00:
